@@ -6,8 +6,6 @@
 # secret values. It prints no secret value.
 
 set -Eeuo pipefail
-# Run a pipeline's last command in this shell, so apply's changed=yes survives.
-shopt -s lastpipe
 
 namespace="${NAMESPACE:-ai-grid-provider-console}"
 context="${HUB_CONTEXT:-}"
@@ -59,18 +57,21 @@ for required_command in kubectl jq curl openssl base64; do
   command -v "$required_command" >/dev/null 2>&1 || die "required command not found: $required_command"
 done
 
-kubectl_args=()
-if [ -n "$context" ]; then
-  kubectl_args+=(--context "$context")
-fi
-k() { kubectl "${kubectl_args[@]}" "$@"; }
+k() {
+  if [ -n "$context" ]; then
+    kubectl --context "$context" "$@"
+  else
+    kubectl "$@"
+  fi
+}
 # Apply from stdin, and remember whether anything changed, so the console
 # restarts only when it has new Secrets to read.
-changed=no
+changed_file="$(mktemp)"
+trap 'rm -f "$changed_file"' EXIT
 apply() {
   local out
   out=$(k apply -f -)
-  case $out in *" unchanged") ;; *) changed=yes ;; esac
+  case $out in *" unchanged") ;; *) printf 'changed\n' > "$changed_file" ;; esac
 }
 
 # A Secret key's value, decoded, or nothing.
@@ -180,7 +181,7 @@ k create secret generic ai-grid-backend-git -n "$namespace" --from-file=token="$
   --dry-run=client -o yaml | apply
 printf 'Created or updated %s/ai-grid-backend-git.\n' "$namespace"
 
-if [ "$changed" = yes ]; then
+if [ -s "$changed_file" ]; then
   k rollout restart deployment "$name" -n "$namespace" >/dev/null
   printf 'Restarted the console to read the changed Secrets.\n'
 else
