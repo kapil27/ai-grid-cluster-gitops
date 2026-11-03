@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/ai-grid-cloud/ai-grid-cluster-gitops.git
-    targetRevision: HEAD
-    path: apps/acm/manifests
+    repoURL: https://github.com/kapil27/ai-grid-cluster-gitops.git
+    targetRevision: main
+    path: apps/acm/manifests/core
     directory:
       # Keep foundation setup to ACM itself. The repository's full `acm`
       # Application later replaces this source when the root ApplicationSet
