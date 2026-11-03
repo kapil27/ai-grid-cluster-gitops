@@ -13,14 +13,15 @@ spec:
     preserveResourcesOnDeletion: false
   generators:
     - git:
-        repoURL: https://github.com/ai-grid-cloud/ai-grid-cluster-gitops.git
-        revision: HEAD
+        repoURL: https://github.com/kapil27/ai-grid-cluster-gitops.git
+        revision: main
         files:
           - path: apps/acm/application.yaml
           - path: apps/acm-models/application.yaml
           - path: apps/ai-grid-policies/application.yaml
           - path: apps/ai-grid-spokes/application.yaml
           - path: apps/cert-manager/application.yaml
+          - path: apps/console/application.yaml
           - path: apps/gitops-config/application.yaml
           - path: apps/grid-bootstrap/application.yaml
           - path: apps/external-services/application.yaml
@@ -43,8 +44,9 @@ spec:
         namespace: '{{.spec.destination.namespace}}'
   # ACM observability needs object storage, so it is left out. A new
   # grid generates its CA, and grid-bootstrap binds global in place of the rhoai
-  # app's binding. acm-models brings only the sample model: argo-registration
-  # registers clusters here, and the console catalog is the combined hub's.
+  # app's binding. argo-registration registers clusters here. This E2E hub
+  # also runs the provider console and its empty model catalog, while sample
+  # model delivery stays available.
   # Limitador runs on the sites, so limitador-redis leaves out its storage config.
   templatePatch: |
     {{- $spec := .spec }}
@@ -57,7 +59,7 @@ spec:
     {{- end }}{{ end }}
     {{- end }}
     {{- if eq .metadata.name "acm-models" }}
-    {{- $_ := set $spec.source "directory" (dict "include" "{facebook-opt-125m-03-applicationset.yaml,maas-03-applicationset.yaml}") }}
+    {{- $_ := set $spec.source "directory" (dict "include" "{facebook-opt-125m-03-applicationset.yaml,maas-03-applicationset.yaml,catalog-03-appprojects.yaml,catalog-04-applicationsets.yaml}") }}
     {{- end }}
     {{- if eq .metadata.name "limitador-redis" }}
     {{- $_ := set $spec.source "directory" (dict "exclude" "{04-limitador-redis-secret.yaml,20-limitador-storage.yaml}") }}

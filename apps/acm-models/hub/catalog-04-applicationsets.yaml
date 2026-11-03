@@ -32,7 +32,7 @@ spec:
                 matchLabels:
                   cluster.open-cluster-management.io/placement: ai-grid-inference
           - git:
-              repoURL: https://github.com/ai-grid-cloud/ai-grid-1-catalog.git
+              repoURL: https://github.com/kapil27/ai-grid-1-catalog.git
               revision: main
               directories:
                 - path: 'catalog/clusters/{{.name}}'
@@ -43,7 +43,7 @@ spec:
     spec:
       project: acm-models-catalog-models
       source:
-        repoURL: https://github.com/ai-grid-cloud/ai-grid-1-catalog.git
+        repoURL: https://github.com/kapil27/ai-grid-1-catalog.git
         targetRevision: main
         path: '{{.path.path}}'
         kustomize: {}
@@ -95,7 +95,7 @@ spec:
                 matchLabels:
                   cluster.open-cluster-management.io/placement: ai-grid-ingress
           - git:
-              repoURL: https://github.com/ai-grid-cloud/ai-grid-1-catalog.git
+              repoURL: https://github.com/kapil27/ai-grid-1-catalog.git
               revision: main
               directories:
                 - path: 'catalog/ingress'
@@ -110,7 +110,7 @@ spec:
     spec:
       project: acm-models-catalog-maas
       source:
-        repoURL: https://github.com/ai-grid-cloud/ai-grid-1-catalog.git
+        repoURL: https://github.com/kapil27/ai-grid-1-catalog.git
         targetRevision: main
         path: '{{.path.path}}'
         kustomize: {}
@@ -161,7 +161,7 @@ spec:
                 matchLabels:
                   cluster.open-cluster-management.io/placement: ai-grid-ingress
           - git:
-              repoURL: https://github.com/ai-grid-cloud/ai-grid-1-catalog.git
+              repoURL: https://github.com/kapil27/ai-grid-1-catalog.git
               revision: main
               directories:
                 - path: 'catalog/subscriptions'
@@ -176,7 +176,7 @@ spec:
     spec:
       project: acm-models-catalog-maas
       source:
-        repoURL: https://github.com/ai-grid-cloud/ai-grid-1-catalog.git
+        repoURL: https://github.com/kapil27/ai-grid-1-catalog.git
         targetRevision: main
         path: '{{.path.path}}'
         directory:
