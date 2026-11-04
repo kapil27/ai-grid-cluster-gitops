@@ -47,13 +47,13 @@ spec:
     spec:
       project: default
       sources:
-        - repoURL: https://github.com/ai-grid-cloud/ai-grid-cluster-gitops.git
-          targetRevision: HEAD
+        - repoURL: https://github.com/kapil27/ai-grid-cluster-gitops.git
+          targetRevision: main
           ref: values
         # The Grid identity the serving Gateway annotation names in the profile;
         # whoever writes that annotation provisions it.
-        - repoURL: https://github.com/ai-grid-cloud/ai-grid-cluster-gitops.git
-          targetRevision: HEAD
+        - repoURL: https://github.com/kapil27/ai-grid-cluster-gitops.git
+          targetRevision: main
           path: apps/rhoai/grid-model-client
         # Immutable OCI snapshot from the 3.6.0 dev channel.
         - repoURL: oci://ghcr.io/opendatahub-io/odh-gitops/rhai-on-openshift-chart
@@ -107,8 +107,8 @@ spec:
                         cidr: {{ printf "invalid ai-grid/machine-network label %s" . | quote }}
                         {{- end }}
                     {{- end }}
-        - repoURL: https://github.com/ai-grid-cloud/ai-grid-cluster-gitops.git
-          targetRevision: HEAD
+        - repoURL: https://github.com/kapil27/ai-grid-cluster-gitops.git
+          targetRevision: main
           path: apps/rhoai/catalog
           helm:
             releaseName: rhoai-nightly-catalog
