@@ -20,8 +20,8 @@ spec:
     - matrix:
         generators:
           - git:
-              repoURL: https://github.com/ai-grid-cloud/ai-grid-cluster-gitops.git
-              revision: HEAD
+              repoURL: https://github.com/rareddy/ai-grid-cluster-gitops.git
+              revision: nov4
               files:
                 - path: apps/acm/application.yaml
                 - path: apps/acm-models/application.yaml
