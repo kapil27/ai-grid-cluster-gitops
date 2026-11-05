@@ -127,3 +127,7 @@ responsibility of that shared database app.
 
 The stable realm signing keys depend on the cluster-wide cert-manager
 installation.
+
+## Tenant portal callback registration
+
+The redirect-URI CronJob discovers enabled ingress/combined sites and registers their native MaaS portal OAuth callbacks on the tenant client. Its CLI authenticates in `master`, then uses `--target-realm saas` for client queries and updates. `--realm saas` changes the authentication realm and makes these operations fail with HTTP 401 even when the administrator password is correct. Check Job completion separately from Argo Application health.

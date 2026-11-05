@@ -31,6 +31,11 @@ assert "consoleurl.cluster.open-cluster-management.io" in init_script
 assert "https://maas.apps.%s/oauth2/callback" in init_script
 assert "http://localhost:8000/callback" in init_script
 assert "kcadm.sh update" in update_script
+# --realm changes the credential realm and would reauthenticate master admin
+# against saas; --target-realm selects resources while retaining master auth.
+assert "--realm master" in update_script
+assert "--realm saas" not in update_script
+assert update_script.count("--target-realm saas") == 2
 assert '--config "$kcadm_config"' in update_script
 assert "redirectUris=" in update_script
 with open(f"{sys.argv[2]}/init.sh", "w") as stream:
