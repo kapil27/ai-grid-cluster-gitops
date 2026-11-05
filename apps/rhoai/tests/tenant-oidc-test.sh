@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Checks the AITenant OIDC Secret namespace and hub-template add-on contract.
+# Checks OIDC credentials for AITenant and its native consumer portal, plus hub-template access.
 # Needs PyYAML.
 set -Eeuo pipefail
 
@@ -14,10 +14,11 @@ rbac_documents = list(yaml.safe_load_all(open(sys.argv[2])))
 templates = [template["objectDefinition"] for template in policy["spec"]["policy-templates"]]
 secret_policy = next(template for template in templates
                       if template.get("metadata", {}).get("name") == "rhoai-tenant-oidc-client-secret")
-assert secret_policy["spec"]["namespaceSelector"]["include"] == ["ai-tenants"]
+assert set(secret_policy["spec"]["namespaceSelector"]["include"]) == {"ai-tenants", "models-as-a-service"}
 secret = secret_policy["spec"]["object-templates"][0]["objectDefinition"]
-assert secret["metadata"]["namespace"] == "ai-tenants"
+assert "namespace" not in secret["metadata"], "let namespaceSelector deliver the Secret to both consumers"
 assert secret["metadata"]["name"] == "tenant-demo-oidc-client"
+assert secret["data"]["clientSecret"] == "{{hub fromSecret \"maas-db\" \"keycloak-secrets\" \"KEYCLOAK_CLIENT_SECRET\" hub}}"
 
 tenant_policy = next(template for template in templates
                       if template.get("metadata", {}).get("name") == "rhoai-aitenant")

@@ -76,9 +76,14 @@ spec:
         spec:
           remediationAction: enforce
           severity: high
+          # AITenant lives in ai-tenants, while the native consumer-portal
+          # controller resolves its clientSecretRef from status.tenantNamespace.
+          # Keep both consumers supplied from the same hub credential. Omitting
+          # metadata.namespace lets the selector deliver one Secret to each.
           namespaceSelector:
             include:
               - ai-tenants
+              - models-as-a-service
           object-templates:
             - complianceType: musthave
               objectDefinition:
@@ -86,7 +91,6 @@ spec:
                 kind: Secret
                 metadata:
                   name: tenant-demo-oidc-client
-                  namespace: ai-tenants
                 type: Opaque
                 data:
                   clientSecret: '{{hub fromSecret "maas-db" "keycloak-secrets" "KEYCLOAK_CLIENT_SECRET" hub}}'
