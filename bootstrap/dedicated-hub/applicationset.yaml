@@ -19,8 +19,8 @@ spec:
   generators:
     # ACM and argo-registration must start before a cluster Secret exists.
     - git:
-        repoURL: https://github.com/rareddy/ai-grid-cluster-gitops.git
-        revision: nov4
+        repoURL: https://github.com/kapil27/ai-grid-cluster-gitops.git
+        revision: qe/pr237-fork-source-migration
         files:
           - path: apps/acm/application.yaml
           - path: apps/acm-models/application.yaml
@@ -50,8 +50,8 @@ spec:
     - matrix:
         generators:
           - git:
-              repoURL: https://github.com/rareddy/ai-grid-cluster-gitops.git
-              revision: nov4
+              repoURL: https://github.com/kapil27/ai-grid-cluster-gitops.git
+              revision: qe/pr237-fork-source-migration
               files:
                 - path: apps/odf/application.yaml
           - clusters:

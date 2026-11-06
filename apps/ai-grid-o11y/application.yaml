@@ -6,8 +6,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/rareddy/ai-grid-cluster-gitops.git
-    targetRevision: nov4
+    repoURL: https://github.com/kapil27/ai-grid-cluster-gitops.git
+    targetRevision: qe/pr237-fork-source-migration
     path: apps/ai-grid-o11y/manifests
   destination:
     server: https://kubernetes.default.svc

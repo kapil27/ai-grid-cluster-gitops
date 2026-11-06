@@ -14,8 +14,8 @@ spec:
     preserveResourcesOnDeletion: true
   generators:
     - git:
-        repoURL: https://github.com/rareddy/ai-grid-cluster-gitops.git
-        revision: nov4
+        repoURL: https://github.com/kapil27/ai-grid-cluster-gitops.git
+        revision: qe/pr237-fork-source-migration
         files:
           - path: apps/*/application.yaml
           # The usage-log store belongs to the dedicated-hub profile. A standard hub
